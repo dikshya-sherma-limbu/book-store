@@ -4,10 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#FFCE1A",
-        secondary: "#0D0842",
-        danger: "#F3F3F3",
-        favourite: "#FFCE1A",
+        primary: "#F4EDD3", // A vibrant green for action buttons (e.g., Add to Cart)
+        secondary: "#1E2022", // A deep charcoal for text and backgrounds
+        danger: "#FF5252", // A bold red for error messages or important warnings
+        favourite: "#FFD700", // A warm gold for favorite items or highlights
       },
       fontFamily: {
         primary: ["Montserrat", "serif"],
