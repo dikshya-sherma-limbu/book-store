@@ -7,6 +7,7 @@ import { IoIosHeartEmpty } from "react-icons/io";
 import { CiShoppingCart } from "react-icons/ci";
 import avatarImg from "../assets/avatar.png";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard" },
@@ -16,8 +17,11 @@ const navigation = [
 ];
 
 function Navbar() {
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  console.log(cartItems);
   const currentUser = false;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   return (
     <header className="max-w-screen-2xl mx-auto px-4 py-6">
       <nav className="flex justify-between  items-center">
@@ -90,7 +94,14 @@ function Navbar() {
             className="bg-primary p-1 sm:px-6 px-2 flex items-center rounded-sm"
           >
             <CiShoppingCart className="size-6 " />
-            <span className="text-sm font-semibold sm:ml-1">0</span>
+            {/* Cart items count */}
+            {totalItems > 0 ? (
+              <span className="text-sm font-semibold sm:ml-1">
+                {totalItems}
+              </span>
+            ) : (
+              <span className="text-sm font-semibold sm:ml-1">0</span>
+            )}
           </Link>
         </div>
       </nav>

@@ -5,7 +5,7 @@ import Recommended from "./Recommended";
 import News from "./News";
 import "../../App.css";
 import Footer from "../../components/Footer";
-function Home() {
+function HomePage() {
   return (
     <div>
       <Banner />
@@ -16,4 +16,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;
