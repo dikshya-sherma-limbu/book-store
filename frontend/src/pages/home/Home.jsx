@@ -12,7 +12,6 @@ function Home() {
       <TopSellers />
       <Recommended />
       <News />
-      <Footer />
     </div>
   );
 }
