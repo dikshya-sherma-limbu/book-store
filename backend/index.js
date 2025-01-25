@@ -15,7 +15,7 @@ app.use(
 );
 
 //routes
-const bookRoute = require("./src/endpoints/bookRoute");
+const bookRoute = require("./src/routes/bookRoute");
 app.use("/api/books", bookRoute);
 
 main()
