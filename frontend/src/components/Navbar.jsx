@@ -8,6 +8,7 @@ import { CiShoppingCart } from "react-icons/ci";
 import avatarImg from "../assets/avatar.png";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useAuth } from "../context/AuthContext";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard" },
@@ -18,10 +19,14 @@ const navigation = [
 
 function Navbar() {
   const cartItems = useSelector((state) => state.cart.cartItems);
-  console.log(cartItems);
-  const currentUser = false;
+
+  const { currentUser, logoutUser } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
+  const handleLogOut = async () => {
+    logoutUser();
+  };
   return (
     <header className="max-w-screen-2xl mx-auto px-4 py-6">
       <nav className="flex justify-between  items-center">
@@ -64,7 +69,7 @@ function Navbar() {
                   style={{ top: "100%" }}
                 >
                   <ul
-                    className="py-2
+                    className="py-2 
                   "
                   >
                     {navigation.map((item) => (
@@ -77,6 +82,14 @@ function Navbar() {
                         </Link>
                       </li>
                     ))}
+                    <li>
+                      <button
+                        className="block px-4 py-2 text-sm hover:bg-gray-100 w-full"
+                        onClick={handleLogOut}
+                      >
+                        Log Out
+                      </button>
+                    </li>
                   </ul>
                 </div>
               )}
