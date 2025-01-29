@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-
+import { useAuth } from "../context/AuthContext";
 function Register() {
   const [message, setMessage] = useState("");
   const {
@@ -11,9 +11,29 @@ function Register() {
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  // import the registerUser function from the AuthContext
+  const { registerUser, signInWithGoogle } = useAuth();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      await registerUser(data.email, data.password);
+      alert("User registered successfully");
+    } catch (error) {
+      setMessage(error.message + " Please try again");
+    }
+  };
   console.log(watch("email")); // watch input value by passing the name of it
-  const handleGoogleSignIn = () => {};
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+      alert("User logged in successfully");
+      navigate("/");
+    } catch (error) {
+      setMessage("Error while log in with google : " + error.message);
+    }
+  };
   return (
     <div className="h-[calc(100vh-120px)] border flex justify-center items-center">
       <div className="w-full max-w-sm mx-auto bg-secondary shadow-xl inset-shadow-sm rounded px-8 pt-6 pb-8 mb-4">
