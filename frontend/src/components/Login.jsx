@@ -2,18 +2,40 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [message, setMessage] = useState("");
+  const { loginUser, signInWithGoogle } = useAuth();
+
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = async (data) => {
+    try {
+      await loginUser(data.email, data.password);
+      alert("User logged in successfully");
+      navigate("/");
+    } catch (error) {
+      setMessage("Error while log in : " + error.message);
+    }
+  };
   console.log(watch("email")); // watch input value by passing the name of it
-  const handleGoogleSignIn = () => {};
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+      alert("User logged in successfully");
+      navigate("/");
+    } catch (error) {
+      setMessage("Error while log in with google : " + error.message);
+    }
+  };
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <div className="h-[calc(100vh-120px)] border flex justify-center items-center">
