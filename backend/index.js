@@ -16,7 +16,10 @@ app.use(
 
 //routes
 const bookRoute = require("./src/routes/bookRoute");
+const orderRoute = require("./src/routes/orderRoute");
 app.use("/api/books", bookRoute);
+
+app.use("/api/orders", orderRoute);
 
 main()
   .then(() => console.log("Connected to MongoDB"))

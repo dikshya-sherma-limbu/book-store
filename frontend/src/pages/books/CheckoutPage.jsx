@@ -3,20 +3,24 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import Swal from "sweetalert2";
+import { useAuth } from "../../context/AuthContext";
+import { useCreateOrderMutation } from "../../redux/features/orders/ordersApi";
 function CheckoutPage() {
   const [isChecked, setIsChecked] = useState(false);
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalPrice = cartItems
     .reduce((acc, item) => acc + item.newPrice * item.quantity, 0)
     .toFixed(2);
-  const currentUser = true; //TODO: get current user from auth
+  const { currentUser } = useAuth();
+  const [createOrder, { isLoading, isError }] = useCreateOrderMutation();
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const newOrder = {
       name: data.name,
       email: currentUser?.email,
@@ -32,7 +36,31 @@ function CheckoutPage() {
       totalPrice: totalPrice,
     };
     console.log(newOrder);
+    try {
+      await createOrder(newOrder).unwrap();
+      Swal.fire({
+        title: "Orderd Successfully",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `,
+        },
+        hideClass: {
+          popup: `
+            animate__animated
+            animate__fadeOutDown
+            animate__faster
+          `,
+        },
+      });
+    } catch (err) {
+      console.log("Error creating order : ", err);
+      alert("Failed to create order");
+    }
   };
+  if (isLoading) return <div>Loading...</div>;
   console.log(errors);
   console.log(watch("zipcode")); // watch input value by passing the name of it
   return (
