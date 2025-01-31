@@ -3,10 +3,11 @@ import App from "../App.jsx";
 import Home from "../pages/home/HomePage.jsx";
 import Login from "../components/Login.jsx";
 import Register from "../components/Register.jsx";
-import CartPage from "../pages/books/CartPage.jsx";
-import CheckoutPage from "../pages/books/CheckoutPage.jsx";
+import CartPage from "../pages/cart/CartPage.jsx";
+import CheckoutPage from "../pages/cart/CheckoutPage.jsx";
 import SingleBook from "../pages/books/SingleBook.jsx";
 import PrivateRoute from "./PrivateRouter.jsx";
+import OrderPage from "../pages/orders/OrderPage.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,7 +19,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/orders",
-        element: <h1>Orders</h1>,
+        element: (
+          <PrivateRoute>
+            <OrderPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/about",
