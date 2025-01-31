@@ -4,9 +4,11 @@ import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useCreateOrderMutation } from "../../redux/features/orders/ordersApi";
 function CheckoutPage() {
+  const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState(false);
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalPrice = cartItems
@@ -55,13 +57,14 @@ function CheckoutPage() {
           `,
         },
       });
+      navigate("/orders");
     } catch (err) {
       console.log("Error creating order : ", err);
       alert("Failed to create order");
     }
   };
   if (isLoading) return <div>Loading...</div>;
-  console.log(errors);
+  if (isError) return <div>Error...</div>;
   console.log(watch("zipcode")); // watch input value by passing the name of it
   return (
     <section>
