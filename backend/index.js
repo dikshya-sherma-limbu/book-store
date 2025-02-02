@@ -10,7 +10,7 @@ console.log(process.env.PORT);
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5174"],
     credentials: true,
   })
 );
@@ -18,9 +18,12 @@ app.use(
 //routes
 const bookRoute = require("./src/routes/bookRoute");
 const orderRoute = require("./src/routes/orderRoute");
+const userRoute = require("./src/routes/userRoute");
+const adminRoute = require("./src/routes/adminRoute");
 app.use("/api/books", bookRoute);
-
 app.use("/api/orders", orderRoute);
+app.use("/api/users", userRoute);
+app.use("/api/admin", adminRoute);
 
 main()
   .then(() => console.log("Connected to MongoDB"))

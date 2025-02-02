@@ -7,6 +7,7 @@ const {
   updateBook,
   deleteBook,
 } = require("../controllers/bookController");
+const verifyAdminToken = require("../middleware/verifyAdminToken");
 
 // Work flow from frontend to backend
 //frontend req -> route -> controller -> model -> database
@@ -14,7 +15,7 @@ const {
 //API ENDPOINT FOR BOOKS
 
 // post a book
-router.post("/create-book", postBook);
+router.post("/create-book", verifyAdminToken, postBook);
 
 // get all books
 router.get("/", getAllBooks);
@@ -23,9 +24,9 @@ router.get("/", getAllBooks);
 router.get("/:id", getSingleBook);
 
 //update a book
-router.put("/update-book/:id", updateBook);
+router.put("/update-book/:id", verifyAdminToken, updateBook);
 
 //delete a book
-router.delete("/delete-book/:id", deleteBook);
+router.delete("/delete-book/:id", verifyAdminToken, deleteBook);
 
 module.exports = router;
