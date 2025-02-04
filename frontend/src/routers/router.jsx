@@ -14,6 +14,7 @@ import DashboardLayout from "../pages/dashboard/DashboardLayout.jsx";
 import Dashboard from "../pages/dashboard/Dashboard.jsx";
 import ManageBooks from "../pages/dashboard/manageBooks/ManageBooks.jsx";
 import AddBook from "../pages/dashboard/addBook/AddBook.jsx";
+import UpdateBook from "../pages/dashboard/updateBook/UpdateBook.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -91,7 +92,7 @@ const router = createBrowserRouter([
       },
       {
         path: "update-book/:id",
-        element: <h1>update-book</h1>,
+        element: <UpdateBook />,
       },
       {
         path: "manage-books",
